@@ -39,7 +39,6 @@ const SignUp = () => {
       });
 
       if (result.status === "SUCCESS") {
-        // Alert.alert(`${result.status}`, result.message);
         router.replace("/verify-email");
       } else {
         Alert.alert("Error", result.message);

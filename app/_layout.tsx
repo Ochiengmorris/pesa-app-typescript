@@ -66,7 +66,7 @@ export default function RootLayout() {
       }
     };
     prepare();
-  }, [error, isVerified, authState.authenticated, fontsLoaded]);
+  }, [error, isVerified, fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;

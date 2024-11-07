@@ -2,7 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { useAuthStore } from "@/context/store/AuthStore";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import {
   Alert,
@@ -32,7 +32,9 @@ const SignIn = () => {
         email: form.email,
         password: form.password,
       });
-      if (result.status !== "SUCCESS") {
+      if (result.status === "SUCCESS") {
+        router.push("/home");
+      } else {
         Alert.alert("Error", result.message.message);
       }
     } catch (error) {

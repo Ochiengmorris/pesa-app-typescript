@@ -1,7 +1,6 @@
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "react-native-gesture-handler";
 import "react-native-reanimated";
 
@@ -12,6 +11,7 @@ import "@/global.css";
 import useLoadToken from "@/hooks/UseLoadToken";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { StatusBar } from "expo-status-bar";
+import SplashScreen2 from "./splashScreen";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -24,12 +24,12 @@ export const unstable_settings = {
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
   const { authState, isLoading, isVerified } = useAuthStore();
+  const [isAppReady, setIsAppReady] = useState(false);
+
   // Load the fonts used in the app.
-  const [fontsLoaded, error] = useFonts({
+  const [fontsLoaded, fontsError] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
     "Poppins-ExtraBold": require("../assets/fonts/Poppins-ExtraBold.ttf"),
@@ -44,32 +44,32 @@ export default function RootLayout() {
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    // Handle errors loading fonts
+    if (fontsError) console.error("Font loading error:", fontsError);
+  }, [fontsError]);
 
   useLoadToken();
 
   useEffect(() => {
-    const prepare = async () => {
-      try {
-        if (fontsLoaded) {
-          if (!isLoading) {
-            if (authState.authenticated) {
-              router.replace(isVerified ? "/home" : "/verify-email");
-            }
-            await SplashScreen.hideAsync();
-          }
-        }
-      } catch (error) {
-        console.error(error);
-        await SplashScreen.hideAsync();
+    const prepareApp = async () => {
+      if (fontsLoaded && !isLoading) {
+        setIsAppReady(true);
       }
     };
-    prepare();
-  }, [error, isVerified, fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
+    prepareApp();
+  }, [fontsLoaded, isLoading]);
+
+  useEffect(() => {
+    if (isAppReady) {
+      if (authState.authenticated) {
+        router.replace(isVerified ? "/home" : "/verify-email");
+      }
+    }
+  }, [isAppReady, authState.authenticated, isVerified]);
+
+  if (!fontsLoaded || !isAppReady) {
+    return <SplashScreen2 />;
   }
 
   return <RootLayoutNav />;
@@ -84,6 +84,12 @@ function RootLayoutNav() {
           <Stack.Screen name="(auth)" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="verify-code" />
+          <Stack.Screen
+            name="splashScreen"
+            options={{
+              animation: "fade",
+            }}
+          />
         </Stack>
       </AlertProvider>
       <StatusBar style="dark" />

@@ -67,7 +67,7 @@ const AllTransactions = () => {
                       }
                       resizeMode="contain"
                       className="w-9 h-9"
-                      tintColor={"#752fce"}
+                      tintColor={"#66488d"}
                     />
                   </View>
                   <View>

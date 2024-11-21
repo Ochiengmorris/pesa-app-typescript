@@ -1,4 +1,5 @@
 import { icons } from "@/constants";
+import { Routes } from "@/constants/Routes";
 import { router, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ const VerifyEmail = () => {
 
         <View className="mb-4 mx-4 flex gap-6">
           <TouchableOpacity
-            onPress={() => router.push("/verify-code")}
+            onPress={() => router.push(Routes.OTP_VERIFICATION)}
             activeOpacity={0.7}
             className={` bg-[#e5e7eb] rounded-xl min-h-[62px] justify-center items-center`}
             disabled={false}

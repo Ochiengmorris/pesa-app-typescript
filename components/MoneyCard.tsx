@@ -1,3 +1,4 @@
+import { Routes } from "@/constants/Routes";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
@@ -9,13 +10,13 @@ const MoneyCard = () => {
       <View className=" flex justify-center items-center">
         <TouchableOpacity
           className="bg-primary p-4 rounded-xl"
-          onPress={() => router.push("/transactions/send-money")}
+          onPress={() => router.push(Routes.SEND_MONEY)}
         >
           <Image
             source={icons.money_out}
             resizeMode="contain"
             className="w-12 h-12"
-            tintColor={"#752fce"}
+            tintColor={"#66488d"}
           />
         </TouchableOpacity>
         <Text className="font-psemibold mt-2 text-lg text-gray-900/50">
@@ -26,13 +27,13 @@ const MoneyCard = () => {
       <View className=" flex justify-center items-center">
         <TouchableOpacity
           className="bg-primary p-4 rounded-xl"
-          onPress={() => router.push("/transactions/request-money")}
+          onPress={() => router.push(Routes.REQUEST_MONEY)}
         >
           <Image
             source={icons.money_in}
             resizeMode="contain"
             className="w-12 h-12"
-            tintColor={"#752fce"}
+            tintColor={"#66488d"}
           />
         </TouchableOpacity>
         <Text className="font-psemibold mt-2 text-lg text-gray-900/50">
@@ -46,7 +47,7 @@ const MoneyCard = () => {
             source={icons.money_save}
             resizeMode="contain"
             className="w-12 h-12"
-            tintColor={"#752fce"}
+            tintColor={"#66488d"}
           />
         </TouchableOpacity>
         <Text className="font-psemibold mt-2 text-lg text-gray-900/50">
@@ -57,13 +58,13 @@ const MoneyCard = () => {
       <View className=" flex justify-center items-center">
         <TouchableOpacity
           className="bg-primary p-4 rounded-xl"
-          onPress={() => router.push("/transactions/top-up")}
+          onPress={() => router.push(Routes.TOP_UP)}
         >
           <Image
             source={icons.money_add}
             resizeMode="contain"
             className="w-12 h-12"
-            tintColor={"#752fce"}
+            tintColor={"#66488d"}
           />
         </TouchableOpacity>
         <Text className="font-psemibold mt-2 text-lg text-gray-900/50">

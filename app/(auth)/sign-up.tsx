@@ -1,6 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { Routes } from "@/constants/Routes";
 import { useAuthStore } from "@/context/store/AuthStore";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -39,7 +40,7 @@ const SignUp = () => {
       });
 
       if (result.status === "SUCCESS") {
-        router.replace("/verify-email");
+        router.replace(Routes.VERIFY_EMAIL);
       } else {
         Alert.alert("Error", result.message);
       }

@@ -1,26 +1,27 @@
 {
   "expo": {
     "name": "pesapp",
-    "slug": "pesapp",
+    "slug": "pesa-app-typescript",
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.johnte.pesaapptypescript"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.johnte.pesaapptypescript"
+      "package": "com.johnte.pesaapptypescript",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",

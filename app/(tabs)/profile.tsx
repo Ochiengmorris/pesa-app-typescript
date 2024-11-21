@@ -1,4 +1,5 @@
 import { icons } from "@/constants";
+import { Routes } from "@/constants/Routes";
 import { useAuthStore } from "@/context/store/AuthStore";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -37,9 +38,9 @@ const Profile = () => {
 
       <View className="mx-5 mt-5">
         <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.item}
-          onPress={() => router.push("/profile/my-profile")}
+          activeOpacity={0.5}
+          className="bg-white/30 flex-row items-center p-4 gap-4 rounded-xl mb-6"
+          onPress={() => router.push(Routes.PROFILE)}
         >
           <Image
             source={icons.user}
@@ -60,9 +61,9 @@ const Profile = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.item}
-          onPress={() => router.push("/profile/pay-methods")}
+          activeOpacity={0.5}
+          className="bg-white/30 flex-row items-center p-4 gap-4 rounded-xl mb-6"
+          onPress={() => router.push(Routes.PAY_METHODS)}
         >
           <Image
             source={icons.viber}
@@ -81,10 +82,12 @@ const Profile = () => {
           </View>
         </TouchableOpacity>
 
+        <View className="border-b border-gray-900 mb-6" />
+
         <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.item}
-          onPress={() => router.push("/profile/settings")}
+          activeOpacity={0.5}
+          className="bg-white/30 flex-row items-center p-4 gap-4 rounded-xl mb-6"
+          onPress={() => router.push(Routes.SETTINGS)}
         >
           <Image
             source={icons.email}
@@ -104,9 +107,9 @@ const Profile = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.item}
-          onPress={() => router.push("/profile/privacy-policy")}
+          activeOpacity={0.5}
+          className="bg-white/30 flex-row items-center p-4 gap-4 rounded-xl mb-6"
+          onPress={() => router.push(Routes.PRIVACY_POLICY)}
         >
           <Image
             source={icons.lock}
@@ -126,10 +129,12 @@ const Profile = () => {
           </View>
         </TouchableOpacity>
 
+        <View className="border-b border-gray-900 mb-6" />
+
         <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.item}
-          onPress={() => router.push("/profile/customer-care")}
+          activeOpacity={0.5}
+          className="bg-white/30 flex-row items-center p-4 gap-4 rounded-xl mb-6"
+          onPress={() => router.push(Routes.CUSTOMER_SUPPORT)}
         >
           <Image
             source={icons.email}
@@ -149,8 +154,8 @@ const Profile = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.item}
+          activeOpacity={0.5}
+          className="bg-white/30 flex-row items-center p-4 gap-4 rounded-xl mb-6"
           onPress={handleLogOut}
         >
           <Image
@@ -188,19 +193,19 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#ece6d9",
     padding: 16,
+    backgroundColor: "#fff",
     marginBottom: 24,
     gap: 16,
     borderRadius: 10,
-    shadowColor: "#752fce",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    // shadowColor: "#752fce",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 5,
   },
 });
 

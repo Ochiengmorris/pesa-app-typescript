@@ -2,13 +2,8 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { icons } from "../constants";
-// import { useAuthStore } from "../context/store/authStore";
 
 const LoadingOverlay = () => {
-  // const isLoading = useAuthStore((state) => state.isLoading);
-
-  // if (!isLoading) return null;
-
   return (
     <View style={styles.overlay}>
       <Image

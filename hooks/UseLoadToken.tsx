@@ -9,8 +9,6 @@ import { useEffect } from "react";
 
 const useLoadToken = () => {
   const setAuthState = useAuthStore((state) => state.setAuthState);
-  const setUser = useAuthStore((state) => state.setUser);
-  const setIsVerified = useAuthStore((state) => state.setIsVerified);
   const setIsLoading = useAuthStore((state) => state.setIsLoading);
   const { fetchData } = useAuthStore();
 
@@ -48,7 +46,7 @@ const useLoadToken = () => {
     };
 
     loadToken();
-  }, [setAuthState, setUser, setIsVerified, setIsLoading]);
+  }, [setAuthState, setIsLoading]);
 };
 
 export default useLoadToken;

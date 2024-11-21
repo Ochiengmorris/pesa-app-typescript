@@ -2,13 +2,14 @@ import EmptyState from "@/components/EmptyState";
 import FullPageModal from "@/components/FullPageModal";
 import MoneyCard from "@/components/MoneyCard";
 import { icons, images } from "@/constants";
+import { Routes } from "@/constants/Routes";
 import { Transaction, useAuthStore } from "@/context/store/AuthStore";
-import LoadNotification from "@/hooks/LoadNotifications";
+import { usePushNotifications } from "@/hooks/UsePushNotifications";
 import { formatDate } from "@/utils/FormatDate";
 import FormatMoney from "@/utils/FormatMoney";
+import isRecentTransaction from "@/utils/RecentTransaction";
 import { router, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
@@ -20,29 +21,31 @@ import {
 } from "react-native";
 const HomePage = () => {
   const { user, fetchData, transactions, setExpoPushToken } = useAuthStore();
+  const { expoPushToken } = usePushNotifications();
   const segments = useSegments();
   const [isHome, setIsHome] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction>();
 
+  useEffect(() => {
+    if (expoPushToken?.data) {
+      setExpoPushToken(expoPushToken?.data);
+    }
+  }, [expoPushToken?.data]);
+
   const route = segments.join("/");
   useEffect(() => {
     setIsHome(route === "(tabs)/home");
   }, [route]);
 
-  LoadNotification({ setExpoPushToken });
+  // LoadNotification({ setExpoPushToken });
 
   const filteredData = useMemo(() => {
-    const today = moment().format("YYYY-MM-DD");
-    const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
-
     if (!transactions) return [];
 
-    return transactions.filter(
-      (item) =>
-        moment(item.transactionDate).format("YYYY-MM-DD") === today ||
-        moment(item.transactionDate).format("YYYY-MM-DD") === yesterday
+    return transactions.filter((item) =>
+      isRecentTransaction(item.transactionDate)
     );
   }, [transactions]);
 
@@ -61,13 +64,15 @@ const HomePage = () => {
     setModalVisible(true);
   };
 
+  const iconTint = "#66488d";
+
   return (
     <View className="bg-primary h-full relative">
       <View className="bg-secondary pt-[50px] flex flex-row items-center justify-between pb-32 px-5 ">
         {/* User balance and profile */}
         <View className="flex flex-row items-center">
           <TouchableOpacity
-            onPress={() => router.push("/profile/my-profile")}
+            onPress={() => router.push(Routes.PROFILE)}
             className="w-16 h-16 rounded-full mr-4 overflow-hidden"
           >
             <Image
@@ -109,14 +114,14 @@ const HomePage = () => {
         <View className="flex-row mb-4 mx-5 justify-center">
           <TouchableOpacity
             className="py-4 px-2 rounded-lg flex justify-center items-center gap-2"
-            onPress={() => router.push("/bills")}
+            onPress={() => router.push(Routes.BILLS)}
           >
             <View className="bg-secondary-200 p-4 rounded-full">
               <Image
                 source={icons.smartphone}
                 resizeMode="contain"
                 className="w-10 h-10"
-                tintColor={"#752fce"}
+                tintColor={iconTint}
               />
             </View>
             <Text className="font-psemibold">Mobile</Text>
@@ -127,7 +132,7 @@ const HomePage = () => {
                 source={icons.light_bulb}
                 resizeMode="contain"
                 className="w-10 h-10"
-                tintColor={"#752fce"}
+                tintColor={iconTint}
               />
             </View>
             <Text className="font-psemibold">Eletricity</Text>
@@ -138,7 +143,7 @@ const HomePage = () => {
                 source={icons.kindness}
                 resizeMode="contain"
                 className="w-10 h-10"
-                tintColor={"#752fce"}
+                tintColor={iconTint}
               />
             </View>
             <Text className="font-psemibold">Charity</Text>
@@ -149,7 +154,7 @@ const HomePage = () => {
                 source={icons.gas2}
                 resizeMode="contain"
                 className="w-10 h-10"
-                tintColor={"#752fce"}
+                tintColor={iconTint}
               />
             </View>
             <Text className="font-psemibold">Gas</Text>
@@ -160,7 +165,7 @@ const HomePage = () => {
                 source={icons.water_drop}
                 resizeMode="contain"
                 className="w-10 h-10"
-                tintColor={"#752fce"}
+                tintColor={iconTint}
               />
             </View>
             <Text className="font-psemibold">Water</Text>
@@ -171,7 +176,7 @@ const HomePage = () => {
       <View className="mx-5 mb-2 flex flex-row justify-between">
         <Text className="text-lg font-psemibold"> Recent Transaction</Text>
         <TouchableOpacity
-          onPress={() => router.push("/transactions/transaction-history")}
+          onPress={() => router.push(Routes.TRANSACTION_HISTORY)}
         >
           <Text className="text-secondary font-psemibold">View all</Text>
         </TouchableOpacity>
@@ -199,7 +204,7 @@ const HomePage = () => {
                     }
                     resizeMode="contain"
                     className="w-9 h-9"
-                    tintColor={"#752fce"}
+                    tintColor={iconTint}
                   />
                 </View>
                 <View>

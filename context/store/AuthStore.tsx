@@ -52,12 +52,12 @@ interface AuthStore {
   isVerified: boolean;
   transactions: Transaction[] | null;
   authState: AuthState;
-  expoPushToken: string | null;
+  expoPushToken?: string;
   setAuthState: (authState: AuthState) => void;
   setUser: (user: User | null) => void;
   setIsVerified: (isVerified: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
-  setExpoPushToken: (expoPushToken: string | null) => void;
+  setExpoPushToken: (expoPushToken: string | undefined) => void;
   register: (params: {
     username: string;
     phone: string;
@@ -108,7 +108,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     token: null,
     authenticated: false,
   },
-  expoPushToken: null,
+  // expoPushToken: null,
 
   // Setter functions
   setAuthState: (authState) => set({ authState }),
